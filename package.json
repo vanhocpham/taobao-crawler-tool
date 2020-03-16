@@ -1,0 +1,31 @@
+{
+  "name": "taobao-crawler-tool",
+  "version": "1.0.0",
+  "description": "tool quick download image from link item taobao",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "mocha"
+  },
+  "keywords": [
+    "tool",
+    "crawler",
+    "scrapper"
+  ],
+  "author": "hoc-anms",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "http-errors": "^1.7.3",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "request-promise": "^4.2.5"
+  }
+}
