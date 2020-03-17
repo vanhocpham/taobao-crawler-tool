@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="./css/style.css" rel="stylesheet" type="text/css" >
+  <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h5 class="card-title text-center">Tool</h5>
+                <form class="form-signin">
+                  <div class="form-label-group">
+                    <input type="email" id="inputLink" class="form-control" placeholder="Copy link in here" required autofocus>
+                    <label for="inputLink">Copy link in here</label>
+                  </div>
+    
+                  <div class="form-label-group">
+                    <input type="file" id="inputPath" class="form-control" placeholder="Choose Path" required>
+                    <label for="inputPath">Choose Path</label>
+                  </div>
+    
+                  <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Like</label>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Download</button>
+                  <hr class="my-4">
+                  <input type="file" name="BrowseFolder" size=50 onchange="BrowseFolder_OnChange">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+
+</html>

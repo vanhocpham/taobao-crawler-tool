@@ -61,10 +61,10 @@ app.use(flash())
 // create route views
 app.use( "/", route );
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  // next(createError(404))
-  res.redirect( "/404" )
-})
+// app.use((req, res, next) => {
+//   // next(createError(404))
+//   res.redirect( "/404" )
+// })
 
 
 // listen a port
