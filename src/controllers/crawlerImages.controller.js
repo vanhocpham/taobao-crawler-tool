@@ -24,26 +24,32 @@ let downloadImage = async ( url, dest ) => {
 
 module.exports = {
   "index": async ( req, res ) => {
-    const html = await axios.get( "https://detail.tmall.com/item.htm?id=557671415266&spm=a21wu.241046-global.4691948847.31.41cab6cbihbqnJ&scm=1007.15423.84311.100200300000001&pvid=fbc80eed-17a1-4252-b05b-adf3e0cb39a4&sku_properties=1627207:1659396112" );
+    const html = await axios.get( "http://localhost:8686/test" );
     const $ = await cheerio.load(html.data);
     let link = [];
 
     const itemSideBar = $(".tb-thumb");
     const itemBody = $(".J_TSaleProp.tb-img ");
+
     if ( req.query.url.includes( "item.taobao.com" ) ) {
+      // Get all link image on side bar with item.taobao.com
       itemSideBar.find("img").map( async ( index, element ) => {
-        await link.push("http:"+element.attribs["data-src"].split("jpg")[0]+"jpg");
+        let itemUrl = element.attribs["data-src"].includes( "jpg" ) && element.attribs["data-src"].includes( "png" ) || element.attribs["data-src"].includes( "png" ) ? element.attribs["data-src"].split("png")[0]+"png" : element.attribs["data-src"].split("jpg")[0]+"jpg";
+        await link.push("http:"+ itemUrl );
       } );
-    } else {
+    } else {      
+      // Get all link image on side bar with shop.Tmall.com
       itemSideBar.find("img").map( async ( index, element ) => {
-        await link.push("http:"+element.attribs["src"].split("jpg")[0]+"jpg");
+        let itemUrl = element.attribs["src"].includes( "jpg" ) && element.attribs["src"].includes( "png" ) || element.attribs["src"].includes( "png" ) ? element.attribs["src"].split("png")[0]+"png" : element.attribs["src"].split("jpg")[0]+"jpg";
+        await link.push("http:"+ itemUrl);
       } );
     }
   
   
 
     itemBody.find("a").map( async ( index, element ) => {
-      await link.push("http:"+ element.attribs["style"].split("(")[1].split(")")[0].split("jpg")[0]+"jpg")
+      let itemUrl = element.attribs["style"].split("(")[1].split(")")[0].includes( "jpg" ) && element.attribs["style"].split("(")[1].split(")")[0].includes( "png" ) || element.attribs["style"].split("(")[1].split(")")[0].includes( "png" ) ? element.attribs["style"].split("(")[1].split(")")[0].split("png")[0]+"png" : element.attribs["style"].split("(")[1].split(")")[0].split("jpg")[0]+"jpg";
+      await link.push("http:"+ itemUrl)
     } );
     
     link = [...new Set( link )]

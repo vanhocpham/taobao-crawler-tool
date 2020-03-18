@@ -26,6 +26,7 @@
     "express-session": "^1.17.0",
     "http-errors": "^1.7.3",
     "image-downloader": "^3.5.0",
+    "jsdom": "^16.2.1",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
     "request-promise": "^4.2.5"
