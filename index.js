@@ -12,6 +12,7 @@ const route = require( "./src/routes" );
 const session = require( "express-session" );
 const cookieParser = require( "cookie-parser" );
 const flash = require( "connect-flash" );
+const config = require("./src/config/config");
 let server = null;
 
 
@@ -20,7 +21,7 @@ server = http.createServer( app );
 
 
 // set server port
-app.set( "port", 8686 );
+app.set( "port", config.PORT );
 
 // handle cors
 app.use( cors( {
@@ -68,8 +69,8 @@ app.use( "/", route );
 
 
 // listen a port
-server.listen(8686, () => {
-  console.log( `Api server: process ${ process.pid } running 8686` );
+server.listen(config.PORT, () => {
+  console.log( `Api server: process ${ process.pid } running ${config.PORT}` );
 } );
 
 module.exports = app;
