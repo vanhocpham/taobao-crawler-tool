@@ -3,6 +3,9 @@ const axios = require( "axios" );
 const downloader = require('image-downloader');
 const path = require( "path" );
 const fs = require("fs");
+const AdmZip = require('adm-zip');
+const config = require( "../config/config" );
+const rimraf = require("rimraf");
 
 let downloadImage = async ( url, dest ) => {  
   const stream = path.resolve( dest)
@@ -30,6 +33,7 @@ module.exports = {
 
     const itemSideBar = $(".tb-thumb");
     const itemBody = $(".J_TSaleProp.tb-img ");
+    const zip = new AdmZip();
 
     if ( req.query.url.includes( "item.taobao.com" ) ) {
       // Get all link image on side bar with item.taobao.com
@@ -44,28 +48,45 @@ module.exports = {
         await link.push("http:"+ itemUrl);
       } );
     }
-  
-  
 
+    // Get url image from description
     itemBody.find("a").map( async ( index, element ) => {
       let itemUrl = element.attribs["style"].split("(")[1].split(")")[0].includes( "jpg" ) && element.attribs["style"].split("(")[1].split(")")[0].includes( "png" ) || element.attribs["style"].split("(")[1].split(")")[0].includes( "png" ) ? element.attribs["style"].split("(")[1].split(")")[0].split("png")[0]+"png" : element.attribs["style"].split("(")[1].split(")")[0].split("jpg")[0]+"jpg";
       await link.push("http:"+ itemUrl)
     } );
     
+    // remove link image duplicate
     link = [...new Set( link )]
 
-    //  /home/hocpv/Desktop/
+    // create folder if it not exist
+    if ( fs.existsSync(config.FOLDER)) {
+      await rimraf(config.FOLDER, async () => { 
+        console.log("done");
+        await fs.mkdirSync( config.FOLDER );
+       });
+    }
+    if ( !fs.existsSync(config.FOLDER)) { 
+      await fs.mkdirSync( config.FOLDER );
+    }
+    if ( fs.existsSync(config.ZIP)) {
+      await fs.unlinkSync(config.ZIP);
+    }    
+
+    // download
     link.map( async (item) => {
       await downloader({
         url: item,
-        dest: "/home/hocpv/Desktop/test"
+        dest: config.FOLDER
       })
       // await downloadImage( item, "/home/hocpv/Desktop/test");
     } );
+    await zip.addLocalFolder(config.FOLDER);
+    await zip.writeZip(config.ZIP);
+
    
    
 
     // console.log( link );
-    res.render( "index" );
+    res.download( config.ZIP );
   }
 };

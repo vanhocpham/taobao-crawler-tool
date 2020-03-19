@@ -4,7 +4,8 @@
   "description": "tool quick download image from link item taobao",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "NODE_ENV=production nodemon  index.js",
+    "start:dev": "NODE_ENV=development nodemon  index.js",
     "test": "mocha"
   },
   "keywords": [
@@ -15,6 +16,7 @@
   "author": "hoc-anms",
   "license": "MIT",
   "devDependencies": {
+    "adm-zip": "^0.4.14",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
@@ -29,7 +31,8 @@
     "jsdom": "^16.2.1",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "request": "^2.88.2"
