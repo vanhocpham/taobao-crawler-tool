@@ -26,6 +26,7 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "helmet": "^3.21.3",
     "http-errors": "^1.7.3",
     "image-downloader": "^3.5.0",
     "jsdom": "^16.2.1",

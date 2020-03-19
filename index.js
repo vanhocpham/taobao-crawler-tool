@@ -13,6 +13,7 @@ const session = require( "express-session" );
 const cookieParser = require( "cookie-parser" );
 const flash = require( "connect-flash" );
 const config = require("./src/config/config");
+const helmet = require( "helmet" );
 let server = null;
 
 
@@ -51,6 +52,9 @@ app.use(session({
 
 // create log on server
 app.use( logger( "dev" ) );
+
+// helmet security
+app.use( helmet() );
 
 // view engine setup
 app.use(express.static(__dirname + "/public"));

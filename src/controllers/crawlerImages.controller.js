@@ -6,7 +6,6 @@ const fs = require("fs");
 const AdmZip = require('adm-zip');
 const config = require( "../config/config" );
 const rimraf = require("rimraf");
-
 let downloadImage = async ( url, dest ) => {  
   const stream = path.resolve( dest)
   const writer = fs.createWriteStream(stream)
@@ -27,7 +26,7 @@ let downloadImage = async ( url, dest ) => {
 
 module.exports = {
   "index": async ( req, res ) => {
-    const html = await axios.get( "http://localhost:8686/test" );
+    const html = await axios.get( req.body.inputLink.trim() );
     const $ = await cheerio.load(html.data);
     let link = [];
 
@@ -35,7 +34,7 @@ module.exports = {
     const itemBody = $(".J_TSaleProp.tb-img ");
     const zip = new AdmZip();
 
-    if ( req.query.url.includes( "item.taobao.com" ) ) {
+    if ( req.body.inputLink.trim().includes( "item.taobao.com" ) ) {
       // Get all link image on side bar with item.taobao.com
       itemSideBar.find("img").map( async ( index, element ) => {
         let itemUrl = element.attribs["data-src"].includes( "jpg" ) && element.attribs["data-src"].includes( "png" ) || element.attribs["data-src"].includes( "png" ) ? element.attribs["data-src"].split("png")[0]+"png" : element.attribs["data-src"].split("jpg")[0]+"jpg";
@@ -68,25 +67,19 @@ module.exports = {
     if ( !fs.existsSync(config.FOLDER)) { 
       await fs.mkdirSync( config.FOLDER );
     }
-    if ( fs.existsSync(config.ZIP)) {
-      await fs.unlinkSync(config.ZIP);
-    }    
 
     // download
-    link.map( async (item) => {
-      await downloader({
+    await Promise.all( link.map( async (item) => {
+      const { filename, image} = await downloader.image({
         url: item,
         dest: config.FOLDER
       })
-      // await downloadImage( item, "/home/hocpv/Desktop/test");
-    } );
-    await zip.addLocalFolder(config.FOLDER);
-    await zip.writeZip(config.ZIP);
+      return filename
+    } ) );
+    
+    zip.addLocalFolder(config.FOLDER);
+    zip.writeZip(config.ZIP);
 
-   
-   
-
-    // console.log( link );
-    res.download( config.ZIP );
+    return res.download( config.ZIP );
   }
 };
