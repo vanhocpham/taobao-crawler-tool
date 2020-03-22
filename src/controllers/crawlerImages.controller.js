@@ -38,12 +38,15 @@ module.exports = {
       // Get all link image on side bar with item.taobao.com
       itemSideBar.find("img").map( async ( index, element ) => {
         let itemUrl = element.attribs["data-src"].includes( "jpg" ) && element.attribs["data-src"].includes( "png" ) || element.attribs["data-src"].includes( "png" ) ? element.attribs["data-src"].split("png")[0]+"png" : element.attribs["data-src"].split("jpg")[0]+"jpg";
+        if ( itemUrl.includes( "50x50" ) ) { itemUrl = itemUrl.replace( "50x50", "800x800" ) }
+
         await link.push("http:"+ itemUrl );
       } );
     } else {      
       // Get all link image on side bar with shop.Tmall.com
       itemSideBar.find("img").map( async ( index, element ) => {
         let itemUrl = element.attribs["src"].includes( "jpg" ) && element.attribs["src"].includes( "png" ) || element.attribs["src"].includes( "png" ) ? element.attribs["src"].split("png")[0]+"png" : element.attribs["src"].split("jpg")[0]+"jpg";
+        if ( itemUrl.includes( "50x50" ) ) { itemUrl = itemUrl.replace( "50x50", "800x800" ) }
         await link.push("http:"+ itemUrl);
       } );
     }
