@@ -54,6 +54,7 @@ module.exports = {
     // Get url image from description
     itemBody.find("a").map( async ( index, element ) => {
       let itemUrl = element.attribs["style"].split("(")[1].split(")")[0].includes( "jpg" ) && element.attribs["style"].split("(")[1].split(")")[0].includes( "png" ) || element.attribs["style"].split("(")[1].split(")")[0].includes( "png" ) ? element.attribs["style"].split("(")[1].split(")")[0].split("png")[0]+"png" : element.attribs["style"].split("(")[1].split(")")[0].split("jpg")[0]+"jpg";
+      if ( itemUrl.includes( "40x40" ) ) { itemUrl = itemUrl.replace( "50x50", "800x800" ) }
       await link.push("http:"+ itemUrl)
     } );
     
